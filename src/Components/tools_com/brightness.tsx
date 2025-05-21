@@ -98,8 +98,8 @@ export default function Brightness({ onChange }: BrightnessProps) {
 
       <span>
         {brightness >= 0
-          ? `${(brightness * 10).toFixed(1)}`
-          : `-${(Math.abs(brightness) * 10).toFixed(1)}`}
+          ? `${(brightness * 1).toFixed(1)}`
+          : `-${(Math.abs(brightness) * 1).toFixed(1)}`}
       </span>
     </div>
   );
