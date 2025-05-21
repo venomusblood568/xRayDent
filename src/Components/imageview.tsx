@@ -14,9 +14,11 @@ cornerstoneTools.external.cornerstoneMath = cornerstoneMath;
 export default function ImageView({
   brightness,
   zoom,
+  rotation,
 }: {
   brightness: number;
   zoom: number;
+  rotation:number;
 }) {
   const elementRef = useRef<HTMLDivElement | null>(null);
   const [imageId, setImageId] = useState<string | null>(null);
@@ -96,6 +98,17 @@ export default function ImageView({
     cornerstone.setViewport(element, viewport);
   }, [zoom]);
 
+  // Update rotation
+  useEffect(() => {
+    const element = elementRef.current;
+    if (!element) return;
+
+    const viewport = cornerstone.getViewport(element);
+    viewport.rotation = rotation;
+    cornerstone.setViewport(element, viewport);
+    cornerstone.fitToWindow(element);
+  }, [rotation]);
+
   const handleFileSelect = (file: File) => {
     const localImageId =
       cornerstoneWADOImageLoader.wadouri.fileManager.add(file);
@@ -121,7 +134,7 @@ export default function ImageView({
           <div
             ref={elementRef}
             className="w-full h-full bg-black mx-auto rounded-xl cornerstone-container"
-            style={{ minHeight: "450px" }}
+            style={{ minHeight: "450px", minWidth: "100%" }}
           />
         )}
       </div>
