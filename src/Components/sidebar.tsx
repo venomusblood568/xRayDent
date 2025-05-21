@@ -1,4 +1,5 @@
 import Brightness from "./tools_com/brightness";
+import Flip from "./tools_com/flip";
 import Rotate from "./tools_com/Rotate";
 import Zoom from "./tools_com/zoom";
 
@@ -26,6 +27,7 @@ export default function Sidebar({
           onResetZoom={onResetZoom}
         />
         <Rotate onRotate={onRotate} />
+        <Flip/>
       </div>
 
       <button className="mt-6 py-2 px-4 bg-gray-600 hover:bg-gray-700 rounded-xl text-white">

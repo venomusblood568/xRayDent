@@ -30,8 +30,8 @@ export default function Home() {
           onZoomIn={handleZoomIn}
           onZoomOut={handleZoomOut}
           onResetZoom={handleResetZoom}
-          onRotate={setRotation}
-        />
+          onRotate={setRotation} zoom={0}        
+          />
       </div>
       <Footer />
     </div>

@@ -6,8 +6,9 @@ export default function Header() {
         <img
           src={xray}
           alt="Dental X-ray"
-          className="w-20 h-20 object-contain rounded-md p-1"
+          className="w-20 h-20 object-contain rounded-md p-1 ml-4"
         />
+
         <div>
           <h1 className="text-3xl font-bold dm-mono-medium text-white">
             xRayDent
