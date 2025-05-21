@@ -1,4 +1,5 @@
 import Brightness from "./tools_com/brightness";
+import Zoom from "./tools_com/zoom";
 
 export default function Sidebar({
   onBrightnessChange,
@@ -7,9 +8,10 @@ export default function Sidebar({
 }) {
   return (
     <>
-      <div className="w-64 flex flex-col justify-between rounded-2xl border-2 border-white  text-gray-500">
-        <div className="flex-1 flex justify-center m-2">
+      <div className=" flex flex-col rounded-2xl border-2 border-white  text-gray-500">
+        <div className="flex-1 flex flex-col justify-start m-2 gap-3">
           <Brightness onChange={onBrightnessChange} />
+          <Zoom />
         </div>
 
         <div className="p-2">

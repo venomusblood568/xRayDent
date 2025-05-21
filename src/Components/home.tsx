@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <div className="bg-black min-h-screen flex flex-col">
       <Header />
-      <div className="bg-black flex flex-1 p-4 gap-4">
+      <div className="bg-black flex flex-1 p-3 gap-4">
         <ImageView brightness={brightness} />
         <Sidebar onBrightnessChange={setBrightness} />
       </div>
