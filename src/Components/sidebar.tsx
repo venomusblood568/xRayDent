@@ -1,9 +1,11 @@
+import Brightness from "./tools_com/brightness";
+
 export default function Sidebar(){
     return (
       <>
         <div className="w-64 flex flex-col justify-between rounded-2xl border-2 border-white  text-gray-500">
-          <div className="flex-1 flex items-center justify-center">
-            <span>icon list</span>
+          <div className="flex-1 flex justify-center m-2">
+            <Brightness/>
           </div>
 
           <div className="p-2">
