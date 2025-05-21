@@ -1,4 +1,4 @@
-export function MinusIcon(){
+export function RightRotate(){
     return (
       <>
         <svg
@@ -12,7 +12,7 @@ export function MinusIcon(){
           strokeLinecap="round"
           strokeLinejoin="round"
         >
-          <line x1="5" y1="12" x2="19" y2="12"></line>
+          <path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38" />
         </svg>
       </>
     );

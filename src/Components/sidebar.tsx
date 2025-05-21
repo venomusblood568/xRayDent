@@ -1,4 +1,5 @@
 import Brightness from "./tools_com/brightness";
+import Rotate from "./tools_com/Rotate";
 import Zoom from "./tools_com/zoom";
 
 export default function Sidebar({
@@ -15,13 +16,14 @@ export default function Sidebar({
 }) {
   return (
     <div className="flex flex-col rounded-2xl border-2 border-white text-gray-500 p-4 w-72">
-      <div className="flex-1 flex flex-col justify-start gap-6">
+      <div className="flex-1 flex flex-col justify-start gap-2">
         <Brightness onChange={onBrightnessChange} />
         <Zoom
           onZoomIn={onZoomIn}
           onZoomOut={onZoomOut}
           onResetZoom={onResetZoom}
         />
+        <Rotate/>
       </div>
 
       <button className="mt-6 py-2 px-4 bg-gray-600 hover:bg-gray-700 rounded-xl text-white">

@@ -84,10 +84,10 @@ export default function Brightness({ onChange }: BrightnessProps) {
   return (
     <div
       ref={containerRef}
-      className="relative flex items-center justify-between w-64 h-10 px-4 rounded-xl border border-gray-700  text-sm text-white select-none"
+      className="relative flex items-center justify-between w-64 h-12 px-4 rounded-xl border border-gray-700  text-sm text-white select-none"
       style={{ userSelect: "none" }}
     >
-      <span>Brightness</span>
+      <span className="font-medium text-gray-300">Brightness</span>
 
       <div
         ref={separatorRef}
