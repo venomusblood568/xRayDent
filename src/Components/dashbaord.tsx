@@ -1,4 +1,5 @@
 import Header from "./header";
+import ImageView from "./imageview";
 import Sidebar from "./sidebar";
 
 export default function Dashboard() {
@@ -8,9 +9,7 @@ export default function Dashboard() {
         <Header />
 
         <div className="bg-black flex flex-1 p-4 gap-4">
-          <div className="flex-1 flex items-center justify-center rounded-xl border-2 border-white  text-gray-300 text-lg">
-            <p>Image will load here</p>
-          </div>
+          <ImageView/>
           <Sidebar/>
         </div>
       </div>
