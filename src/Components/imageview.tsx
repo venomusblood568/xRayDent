@@ -11,12 +11,20 @@ cornerstoneWADOImageLoader.external.dicomParser = dicomParser;
 cornerstoneTools.external.cornerstone = cornerstone;
 cornerstoneTools.external.cornerstoneMath = cornerstoneMath;
 
-export default function ImageView({ brightness }: { brightness: number }) {
+export default function ImageView({
+  brightness,
+  zoom,
+}: {
+  brightness: number;
+  zoom: number;
+}) {
   const elementRef = useRef<HTMLDivElement | null>(null);
   const [imageId, setImageId] = useState<string | null>(null);
   const [fileSelected, setFileSelected] = useState(false);
   const initialVoiRef = useRef<{ windowCenter: number; windowWidth: number }>();
+  const initialScaleRef = useRef<number>(1);
 
+  // Load image & enable tools
   useEffect(() => {
     const element = elementRef.current;
     if (!element || !imageId) return;
@@ -28,7 +36,7 @@ export default function ImageView({ brightness }: { brightness: number }) {
       .then((image) => {
         cornerstone.displayImage(element, image);
 
-        // Store initial window center/width from DICOM metadata
+        // Store initial VOI values
         initialVoiRef.current = {
           windowCenter: Array.isArray(image.windowCenter)
             ? image.windowCenter[0]
@@ -38,40 +46,55 @@ export default function ImageView({ brightness }: { brightness: number }) {
             : image.windowWidth,
         };
 
-        // Apply initial brightness
+        // Reset viewport and fit to window
+        cornerstone.reset(element);
+        cornerstone.fitToWindow(element);
+
+        // Get initial scale after fitting to window
+        const enabledElement = cornerstone.getEnabledElement(element);
+        initialScaleRef.current = enabledElement.viewport.scale;
+
+        // Apply initial VOI settings
         const viewport = cornerstone.getViewport(element);
         viewport.voi.windowCenter = initialVoiRef.current.windowCenter;
         viewport.voi.windowWidth = initialVoiRef.current.windowWidth;
         cornerstone.setViewport(element, viewport);
 
-        // Enable tools
+        // Initialize tools
         cornerstoneTools.init();
         cornerstoneTools.addTool(cornerstoneTools.ZoomTool);
         cornerstoneTools.setToolActive("Zoom", { mouseButtonMask: 1 });
         cornerstoneTools.addTool(cornerstoneTools.PanTool);
         cornerstoneTools.setToolActive("Pan", { mouseButtonMask: 2 });
       })
-      .catch((err) => console.log("Error Displaying DICOM", err));
+      .catch((err) => console.error("Error displaying DICOM", err));
 
     return () => {
       cornerstone.disable(element);
     };
   }, [imageId]);
 
-  // 🔄 Update viewport on brightness change
+  // Update brightness (window center)
   useEffect(() => {
     const element = elementRef.current;
     if (!element || !initialVoiRef.current) return;
 
     const viewport = cornerstone.getViewport(element);
-
-    // Calculate brightness adjustment relative to original values
     const brightnessRange = initialVoiRef.current.windowWidth * 0.5;
     viewport.voi.windowCenter =
       initialVoiRef.current.windowCenter + brightness * brightnessRange;
-
     cornerstone.setViewport(element, viewport);
   }, [brightness]);
+
+  // Update zoom scale
+  useEffect(() => {
+    const element = elementRef.current;
+    if (!element || !initialScaleRef.current) return;
+
+    const viewport = cornerstone.getViewport(element);
+    viewport.scale = initialScaleRef.current * zoom;
+    cornerstone.setViewport(element, viewport);
+  }, [zoom]);
 
   const handleFileSelect = (file: File) => {
     const localImageId =
@@ -97,7 +120,8 @@ export default function ImageView({ brightness }: { brightness: number }) {
         {fileSelected && (
           <div
             ref={elementRef}
-            className="w-full h-full bg-black mx-auto rounded-xl"
+            className="w-full h-full bg-black mx-auto rounded-xl cornerstone-container"
+            style={{ minHeight: "450px" }}
           />
         )}
       </div>
