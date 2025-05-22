@@ -9,13 +9,18 @@ export default function Sidebar({
   onZoomOut,
   onResetZoom,
   onRotate,
+  zoom,
+  onFlipHorizontal,
+  onFlipVertical,
 }: {
   onBrightnessChange: (value: number) => void;
   zoom: number;
   onZoomIn: () => void;
   onZoomOut: () => void;
   onResetZoom: () => void;
-  onRotate:(angle:number) => void;
+  onRotate: (angle: number) => void;
+  onFlipHorizontal: () => void;
+  onFlipVertical: () => void;
 }) {
   return (
     <div className="flex flex-col rounded-2xl border-2 border-white text-gray-500 p-4 w-72">
@@ -27,7 +32,10 @@ export default function Sidebar({
           onResetZoom={onResetZoom}
         />
         <Rotate onRotate={onRotate} />
-        <Flip/>
+        <Flip
+          onFlipHorizontal={onFlipHorizontal}
+          onFlipVertical={onFlipVertical}
+        />
       </div>
 
       <button className="mt-6 py-2 px-4 bg-gray-600 hover:bg-gray-700 rounded-xl text-white">

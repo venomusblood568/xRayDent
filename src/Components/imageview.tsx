@@ -15,10 +15,14 @@ export default function ImageView({
   brightness,
   zoom,
   rotation,
+  hflip,
+  vflip,
 }: {
   brightness: number;
   zoom: number;
-  rotation:number;
+  rotation: number;
+  hflip: boolean;
+  vflip: boolean;
 }) {
   const elementRef = useRef<HTMLDivElement | null>(null);
   const [imageId, setImageId] = useState<string | null>(null);
@@ -108,6 +112,17 @@ export default function ImageView({
     cornerstone.setViewport(element, viewport);
     cornerstone.fitToWindow(element);
   }, [rotation]);
+
+  useEffect(() => {
+    const element = elementRef.current;
+    if (!element) return;
+
+    const viewport = cornerstone.getViewport(element);
+    viewport.hflip = hflip;
+    viewport.vflip = vflip;
+    cornerstone.setViewport(element, viewport);
+    cornerstone.fitToWindow(element);
+  }, [hflip, vflip]);
 
   const handleFileSelect = (file: File) => {
     const localImageId =
