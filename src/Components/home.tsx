@@ -10,6 +10,8 @@ export default function Home() {
   const [rotation, setRotation] = useState(0);
   const [hflip, setHflip] = useState(false);
   const [vflip, setVflip] = useState(false);
+  const [invert, setInvert] = useState(false);
+
   // Handlers for zoom buttons
   const handleZoomIn = () => {
     setZoom((prev) => Math.min(prev + 0.1, 4)); // max zoom 4x
@@ -32,6 +34,7 @@ export default function Home() {
           rotation={rotation}
           hflip={hflip}
           vflip={vflip}
+          invert={invert}
         />
         <Sidebar
           onBrightnessChange={setBrightness}
@@ -42,6 +45,7 @@ export default function Home() {
           zoom={zoom}
           onFlipHorizontal={() => setHflip((prev) => !prev)}
           onFlipVertical={() => setVflip((prev) => !prev)}
+          onInvertToggle={() => setInvert((prev) => !prev)}
         />
       </div>
       <Footer />
