@@ -1,6 +1,8 @@
 import Brightness from "./tools_com/brightness";
 import Flip from "./tools_com/flip";
 import Invert from "./tools_com/invert";
+import Measurement from "./tools_com/measurement";
+
 import Rotate from "./tools_com/Rotate";
 import Zoom from "./tools_com/zoom";
 
@@ -40,6 +42,7 @@ export default function Sidebar({
           onFlipVertical={onFlipVertical}
         />
         <Invert onInvertToggle={onInvertToggle} />
+        <Measurement/>
       </div>
 
       <button className="mt-6 py-2 px-4 bg-gray-600 hover:bg-gray-700 rounded-xl text-white">
