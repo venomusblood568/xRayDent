@@ -11,7 +11,7 @@ export default function Home() {
   const [hflip, setHflip] = useState(false);
   const [vflip, setVflip] = useState(false);
   const [invert, setInvert] = useState(false);
-  const captureRef = useRef(null);
+  const captureRef = useRef<HTMLDivElement>(null);
 
   // Handlers for zoom buttons
   const handleZoomIn = () => {

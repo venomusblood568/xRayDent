@@ -22,7 +22,7 @@ export default function Zoom({
           type="button"
           onClick={onZoomOut}
         >
-          <MinusIcon className="w-4 h-4 text-white" />
+          <MinusIcon  />
         </button>
 
         <button
@@ -31,7 +31,7 @@ export default function Zoom({
           type="button"
           onClick={onResetZoom}
         >
-          <DefaultIcon className="w-4 h-4 text-white" />
+          <DefaultIcon />
         </button>
 
         <button
@@ -40,7 +40,7 @@ export default function Zoom({
           type="button"
           onClick={onZoomIn}
         >
-          <PlusIcon className="w-4 h-4 text-white" />
+          <PlusIcon/>
         </button>
       </div>
     </div>
