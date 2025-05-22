@@ -25,8 +25,7 @@ xRayDent is a powerful React-based imaging application designed to provide cryst
 
 ## Known Bugs
 
-- **Markers  don’t appear in downloaded images** 
-- 
+- **Markers don’t appear in downloaded images** 
 ---
 
 ## Planned Features
