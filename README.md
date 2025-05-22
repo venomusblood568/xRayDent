@@ -32,6 +32,8 @@ xRayDent is a powerful React-based imaging application designed to provide cryst
 
 - **Draw (freehand or annotation marks)**
 - **Annotation export** 
+- **Drag and Drop**
+- **Drag Zoom**
 ---
 
 ## Getting Started
