@@ -2,7 +2,7 @@ import Footer from "./footer";
 import Header from "./header";
 import ImageView from "./imageview";
 import Sidebar from "./sidebar";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 export default function Home() {
   const [brightness, setBrightness] = useState(0); // -1 to 1 range
@@ -11,6 +11,7 @@ export default function Home() {
   const [hflip, setHflip] = useState(false);
   const [vflip, setVflip] = useState(false);
   const [invert, setInvert] = useState(false);
+  const captureRef = useRef(null);
 
   // Handlers for zoom buttons
   const handleZoomIn = () => {
@@ -27,7 +28,7 @@ export default function Home() {
   return (
     <div className="bg-black min-h-screen flex flex-col">
       <Header />
-      <div className="bg-black flex flex-1 p-3 gap-4">
+      <div ref={captureRef} className="bg-black flex flex-1 p-3 gap-4">
         <ImageView
           brightness={brightness}
           zoom={zoom}
@@ -46,6 +47,7 @@ export default function Home() {
           onFlipHorizontal={() => setHflip((prev) => !prev)}
           onFlipVertical={() => setVflip((prev) => !prev)}
           onInvertToggle={() => setInvert((prev) => !prev)}
+          captureRef={captureRef}
         />
       </div>
       <Footer />
