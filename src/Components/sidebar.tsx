@@ -12,14 +12,12 @@ export default function Sidebar({
   onZoomOut,
   onResetZoom,
   onRotate,
-  zoom,
   onFlipHorizontal,
   onFlipVertical,
   onInvertToggle,
   captureRef,
 }: {
   onBrightnessChange: (value: number) => void;
-  zoom: number;
   onZoomIn: () => void;
   onZoomOut: () => void;
   onResetZoom: () => void;
