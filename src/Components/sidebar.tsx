@@ -25,7 +25,8 @@ export default function Sidebar({
   onFlipHorizontal: () => void;
   onFlipVertical: () => void;
   onInvertToggle: () => void;
-  captureRef: React.RefObject<HTMLDivElement>;
+  captureRef: React.RefObject<HTMLDivElement | null>;
+  zoom: number;
 }) {
   const handleDownload = () => {
     if (!captureRef.current) {

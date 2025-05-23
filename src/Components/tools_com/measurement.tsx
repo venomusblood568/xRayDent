@@ -1,18 +1,23 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, type MouseEvent } from "react";
 import { Pen } from "../../assets/icons/pen";
 import { Cross } from "../../assets/icons/cross";
 
 const DPI = 96;
 const PX_TO_MM = 25.4 / DPI;
 
-function pxToMm(px) {
+function pxToMm(px: number): number {
   return px * PX_TO_MM;
 }
 
+type Point = {
+  x: number;
+  y: number;
+};
+
 export default function Measurement() {
-  const [measuring, setMeasuring] = useState(false);
-  const [points, setPoints] = useState([]);
-  const [distance, setDistance] = useState(null);
+  const [measuring, setMeasuring] = useState<boolean>(false);
+  const [points, setPoints] = useState<Point[]>([]);
+  const [distance, setDistance] = useState<string | null>(null);
 
   const clearMeasurement = () => {
     setPoints([]);
@@ -20,7 +25,7 @@ export default function Measurement() {
     setMeasuring(false);
   };
 
-  function handleOverlayClick(e) {
+  function handleOverlayClick(e: MouseEvent<HTMLDivElement>) {
     if (!measuring) return;
 
     const { clientX, clientY } = e;
@@ -84,14 +89,12 @@ export default function Measurement() {
         </div>
       </div>
 
-      {/* Always show measurement when points exist */}
       {(points.length > 0 || distance) && (
         <div className="fixed inset-0 w-screen h-screen pointer-events-none z-[9999]">
           <svg
             className="absolute top-0 left-0 w-full h-full"
             style={{ overflow: "visible" }}
           >
-            {/* Connection line */}
             {points.length === 2 && (
               <line
                 x1={points[0].x}
@@ -104,7 +107,6 @@ export default function Measurement() {
               />
             )}
 
-            {/* Measurement dots */}
             {points.map((point, index) => (
               <circle
                 key={index}
@@ -117,7 +119,6 @@ export default function Measurement() {
               />
             ))}
 
-            {/* Distance label */}
             {points.length === 2 && (
               <text
                 x={midX}
@@ -140,7 +141,6 @@ export default function Measurement() {
         </div>
       )}
 
-      {/* Measurement overlay (click handling) */}
       {measuring && (
         <div
           onClick={handleOverlayClick}

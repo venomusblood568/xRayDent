@@ -5,26 +5,26 @@ import Sidebar from "./sidebar";
 import { useState, useRef } from "react";
 
 export default function Home() {
-  const [brightness, setBrightness] = useState(0); // -1 to 1 range
-  const [zoom, setZoom] = useState(1); // default zoom scale = 1
+  const [brightness, setBrightness] = useState(0);
+  const [zoom, setZoom] = useState(1);
   const [rotation, setRotation] = useState(0);
   const [hflip, setHflip] = useState(false);
   const [vflip, setVflip] = useState(false);
   const [invert, setInvert] = useState(false);
-  const captureRef = useRef<HTMLDivElement>(null);
+  const captureRef = useRef<HTMLDivElement | null>(null);
 
-  // Handlers for zoom buttons
   const handleZoomIn = () => {
-    setZoom((prev) => Math.min(prev + 0.1, 4)); // max zoom 4x
+    setZoom((prev) => Math.min(parseFloat((prev + 0.1).toFixed(2)), 4));
   };
 
   const handleZoomOut = () => {
-    setZoom((prev) => Math.max(prev - 0.1, 0.1)); // min zoom 0.1x
+    setZoom((prev) => Math.max(parseFloat((prev - 0.1).toFixed(2)), 0.1));
   };
 
   const handleResetZoom = () => {
-    setZoom(1); // reset to 100%
+    setZoom(1);
   };
+
   return (
     <div className="bg-black min-h-screen flex flex-col">
       <Header />

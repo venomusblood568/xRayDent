@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as cornerstone from "cornerstone-core";
 import * as cornerstoneMath from "cornerstone-math";
 import * as cornerstoneTools from "cornerstone-tools";
@@ -29,7 +29,11 @@ export default function ImageView({
   const elementRef = useRef<HTMLDivElement | null>(null);
   const [imageId, setImageId] = useState<string | null>(null);
   const [fileSelected, setFileSelected] = useState(false);
-  const initialVoiRef = useRef<{ windowCenter: number; windowWidth: number }>();
+  const initialVoiRef = useRef<{
+    windowCenter: number;
+    windowWidth: number;
+  } | null>(null);
+
   const initialScaleRef = useRef<number>(1);
 
   // Load image & enable tools
@@ -58,15 +62,17 @@ export default function ImageView({
         cornerstone.reset(element);
         cornerstone.fitToWindow(element);
 
-        // Get initial scale after fitting to window
         const enabledElement = cornerstone.getEnabledElement(element);
-        initialScaleRef.current = enabledElement.viewport.scale;
+        if (enabledElement?.viewport?.scale !== undefined) {
+          initialScaleRef.current = enabledElement.viewport.scale;
+        }
 
-        // Apply initial VOI settings
         const viewport = cornerstone.getViewport(element);
-        viewport.voi.windowCenter = initialVoiRef.current.windowCenter;
-        viewport.voi.windowWidth = initialVoiRef.current.windowWidth;
-        cornerstone.setViewport(element, viewport);
+        if (viewport && initialVoiRef.current) {
+          viewport.voi.windowCenter = initialVoiRef.current.windowCenter;
+          viewport.voi.windowWidth = initialVoiRef.current.windowWidth;
+          cornerstone.setViewport(element, viewport);
+        }
 
         // Initialize tools
         cornerstoneTools.init();
@@ -88,6 +94,8 @@ export default function ImageView({
     if (!element || !initialVoiRef.current) return;
 
     const viewport = cornerstone.getViewport(element);
+    if (!viewport) return;
+
     const brightnessRange = initialVoiRef.current.windowWidth * 0.5;
     viewport.voi.windowCenter =
       initialVoiRef.current.windowCenter + brightness * brightnessRange;
@@ -97,10 +105,12 @@ export default function ImageView({
   // Update zoom scale
   useEffect(() => {
     const element = elementRef.current;
-    if (!element || !initialScaleRef.current) return;
+    if (!element) return;
 
     const viewport = cornerstone.getViewport(element);
-    viewport.scale = initialScaleRef.current * zoom;
+    if (!viewport) return;
+
+    viewport.scale = (initialScaleRef.current ?? 1) * zoom;
     cornerstone.setViewport(element, viewport);
   }, [zoom]);
 
@@ -110,28 +120,34 @@ export default function ImageView({
     if (!element) return;
 
     const viewport = cornerstone.getViewport(element);
+    if (!viewport) return;
+
     viewport.rotation = rotation;
     cornerstone.setViewport(element, viewport);
     cornerstone.fitToWindow(element);
   }, [rotation]);
 
+  // Flip horizontal and vertical
   useEffect(() => {
     const element = elementRef.current;
     if (!element) return;
 
     const viewport = cornerstone.getViewport(element);
+    if (!viewport) return;
+
     viewport.hflip = hflip;
     viewport.vflip = vflip;
     cornerstone.setViewport(element, viewport);
     cornerstone.fitToWindow(element);
   }, [hflip, vflip]);
 
+  // Invert
   useEffect(() => {
     const element = elementRef.current;
     if (!element) return;
 
-    const enabledElement = cornerstone.getEnabledElement(element);
     const viewport = cornerstone.getViewport(element);
+    if (!viewport) return;
 
     viewport.invert = invert;
     cornerstone.setViewport(element, viewport);
